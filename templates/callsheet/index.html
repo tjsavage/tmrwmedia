@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>My Callsheets</h1>
+	<ul>
+	{% if callsheets %}
+	{% for c in callsheets %}
+		<li><a href="/callsheets/{{ c.pk }}/detail">{{ c.name }}</a></li>
+	{% endfor %}
+	{% endif %}
+	</ul>
+{% endblock %}

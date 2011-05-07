@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block preload_js %}
+	<script type="text/javascript" src="/static/js/dynamic-form.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Create New Callsheet</h1>
+<form action="" method="POST">{% csrf_token %}
+	<div class="section">
+		{{ callsheet_form.as_p }}
+	</div>
+	
+	<h2>Contact</h2>
+	{{ contact_formset.management_form }}
+	{% for form in contact_formset.forms %}
+	<div class="item">
+		{{ form.as_p }}
+		<p style=""><a class="delete" href="#">Delete</a></p>
+	</div>
+	{% endfor %}
+	
+	<p><a id="add" href="#">Add another contact</a></p>
+	
+	<input type="submit" value=" Submit " />
+</form>
+
+{% endblock %}

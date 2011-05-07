@@ -1,0 +1,66 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"
+    xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
+    lang="{% firstof LANGUAGE_CODE 'en' %}">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+
+	<link rel="stylesheet" href="/static/css/master.css" />
+    {% block css %}
+    {% endblock %}
+
+    {% block preload_js %}
+    {% endblock %}
+
+    {% block extra-head %}{% endblock %}
+  </head>
+
+  <body>
+    <div id="container">
+	<div id="header">
+		<h1>
+			TomorrowMedia Callsheet
+		</h1>
+	</div>
+	<div id="navigation">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li>{% if request.user.is_authenticated %}
+				<a href="/callsheets/">My Callsheets</a></li>
+				<li><a href="/callsheets/new">New Callsheet</a></li>
+				<li><a href="/registration/logout">Logout</a></li>
+			{% else %}
+				<li><a href="/registration/login">Login</a></li>
+				<li><a href="/registration/register">Register</a></li>
+			{% endif %}
+		</ul>
+	</div>
+	<div id="content">
+		{% block content %}
+		<h2>
+			Page heading
+		</h2>
+		<p>
+			Lorem ipsum dolor sit amet consect etuer adipi scing elit sed diam nonummy nibh euismod tinunt ut laoreet dolore magna aliquam erat volut. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+		</p>
+		<p>
+			Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+		</p>
+		<p>
+			Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+		</p>
+		{% endblock %}
+	</div>
+	<div id="footer">
+		Copyright © Site name, 20XX
+	</div>
+</div>
+
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

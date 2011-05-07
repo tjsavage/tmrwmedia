@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ project.name }}</h1>
+<p>{{ project.description }}</h1>
+<h3>Positions in this Project:</h3>
+<ul>
+{% for position in project.positions %}
+	<li>{{ position.name }}</li><p>{{ position.description }}</p>
+{% endfor %}
+</ul>
+{% endblock %}

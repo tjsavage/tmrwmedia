@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ callsheet.name }}</h1>
+
+<table>
+	<th>
+		<td><b>Name</b></td><td><b>Phone</b></td>
+	</th>
+	<tbody>
+	{% for contact in callsheet.contacts %}
+		<tr><td>{{ contact.name }}</td><td>{{ contact.phone }}</td></tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
