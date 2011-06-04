@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>New Project</h1>
+<form method="POST" action="/projects/new/">
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{% endblock %}

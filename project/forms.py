@@ -1,7 +1,7 @@
 from project.models import *
 from django.forms import ModelForm
 
-class ProjectForm(ModelForm):
+class BasicProjectForm(ModelForm):
 	class Meta:
 		model = Project
-		exclude = ('owner',)
+		fields = ('name',)

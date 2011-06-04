@@ -45,11 +45,11 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
 
-SITE_ID = 53
+SITE_ID = 3
 ACCOUNT_ACTIVATION_DAYS = 100
 ACTIVATION_EMAIL = False
 
-LOGIN_REDIRECT_URL = '/callsheets'
+LOGIN_REDIRECT_URL = '/projects'
 
 # Activate django-dbindexer if available
 try:

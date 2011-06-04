@@ -1,6 +1,7 @@
 from callsheet.models import Callsheet
 from callsheet.forms import *
 from project.models import Project
+from project.forms import BasicProjectForm
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -14,7 +15,19 @@ def index(request):
 	return render_to_response('project/index.html', {'projects':projects}, context_instance=RequestContext(request))
 	
 def new(request):
-	return HttpResponse("new")
+	if request.method == "POST":
+		project_form = BasicProjectForm(request.POST)
+		
+		if project_form.is_valid():
+			project = project_form.save(commit=False)
+			project.owner = request.user
+			project.save()
+			return HttpResponseRedirect('/projects/' + str(project.pk) + '/')
+	else:
+		project_form = BasicProjectForm()
+	
+	return render_to_response('project/new.html', {"form": project_form,})
+	
 
 def detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
