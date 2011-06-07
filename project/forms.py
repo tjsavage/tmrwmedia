@@ -9,4 +9,4 @@ class BasicProjectForm(ModelForm):
 class ProjectForm(ModelForm):
 	class Meta:
 		model = Project
-		exclude = ('owner', 'date_added',)
+		exclude = ('owner', 'date_added', 'date_updated',)
