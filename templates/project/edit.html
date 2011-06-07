@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ project.name }}</h1>
+<form method="POST" action="/projects/{{project.pk}}/edit/">
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
