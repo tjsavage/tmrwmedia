@@ -32,7 +32,7 @@ def new(request):
 @login_required
 def edit(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
-	if(project.owner != request.user):
+	if not project.is_admin(request.user):
 		return render_to_response('project/no_permission.html')
 	
 	if request.method == "POST":
