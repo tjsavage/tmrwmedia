@@ -10,6 +10,13 @@
 <br />
 <div class="info_block">
 <h3>Group Info</h3>
+{% if groups %}
+<ul>
+{% for group in groups %}
+	<li>{{ group.name }}</li>
+{% endfor %}
+</ul>
+{% endif %}
 <a href="/projects/{{ project.pk }}/groups/edit">Edit</a>
 </div>
 <div class="info_block">

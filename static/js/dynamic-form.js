@@ -32,7 +32,7 @@ $(document).ready(function() {
  
     } // End if
     else {
-        alert("You have to enter at least one contact!");
+        alert("You have to enter at least one group!");
     }
     return false;
   }
@@ -76,5 +76,21 @@ $(document).ready(function() {
   $(".delete").click(function() {
     return deleteForm(this, "form");
   });
+  
+  $("#formset-form").submit(function() {
+  	 var forms = $('.item'); // Get all the forms
+ 
+      var i = 0;
+      // Go through the forms and delete the ones without names
+      for (formCount = forms.length; i < formCount; i++) {
+      	if($(forms.get(i)).find("#id_form-" + i + "-name").val() == ""){
+      		deleteForm($(forms.get(i)).find(".delete"), "form");
+      	}
+      }
+      
+      return true;
+    });
+  	
+  	
  
 });

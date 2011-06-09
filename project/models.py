@@ -18,4 +18,3 @@ class Project(models.Model):
 		if user == self.owner:
 			return True
 		return False
-
