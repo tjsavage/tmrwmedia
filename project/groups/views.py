@@ -31,3 +31,6 @@ def edit(request, project_id):
 								"formset": formset,
 								"project": project,
 							})
+
+def index(request, project_id):
+	return HttpResponse("Groups index.")

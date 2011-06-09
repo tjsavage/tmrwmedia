@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 
+{% block preload_js %}
+<script type="text/javascript" src="/static/js/dynamic-form.js"></script>
+{% endblock %}
+
 {% block content %}
 <h1>{{ project.name }}</h1>
 <form method="POST" action="">
-	{{ formset.as_p }}
+
+	{{ formset.management_form }}
+	{% for form in formset.forms %}
+	<div class="item">
+		{{ form.as_p }}
+		<p style=""><a class="delete" href="#">Delete</a></p>
+	</div>
+	{% endfor %}
+	
+	<p><a id="add" href="#">Add another group</a></p>
+	
 	<input type="submit" value="Submit" />
 </form>
 
