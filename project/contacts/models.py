@@ -9,4 +9,8 @@ class Contact(models.Model):
 	group = models.ForeignKey(Group, null=True)
 	date_added = models.DateTimeField(auto_now_add=True)
 	
+	def __unicode__(self):
+		return self.user.first_name + " " + self.user.last_name + " in " + self.project.name
+		
+	
 	
