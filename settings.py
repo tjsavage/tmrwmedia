@@ -5,6 +5,7 @@ from djangoappengine.settings_base import *
 
 import os
 
+
 SECRET_KEY = '=r-$*ddhj29diuDJei3038do*(83hdoW*(U*Hfjds:Quhfjsu#*hd'
 
 INSTALLED_APPS = (
@@ -17,6 +18,7 @@ INSTALLED_APPS = (
     
     'registration',
     'callsheet',
+    'accounts',
     'project',
     'project.groups',
 

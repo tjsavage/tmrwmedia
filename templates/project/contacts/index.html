@@ -6,14 +6,14 @@
 <thead><td>Name</td><td>Phone</td><td>Group</td><td>Email</td></thead>
 {% for contact in contacts %}
 <tr><td>{{ contact.user.first_name }} {{ contact.user.last_name }}</td>
-<td>{{ contact.user.profile.phone }}</td>
+<td>{{ contact.user.get_profile.phone }}</td>
 <td>{{ contact.group }}</td>
 <td>{{ contact.user.email }}</td>
 </tr>
 {% endfor %}
 </table>
 
-<form method="POST" action="">
+<form method="POST" action="invite/">
 	{{ invite_form.as_p }}
 	<input type="submit" value="Submit" />
 </form>

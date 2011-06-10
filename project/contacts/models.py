@@ -6,7 +6,7 @@ from project.groups.models import Group
 class Contact(models.Model):
 	user = models.ForeignKey(User)
 	project = models.ForeignKey(Project)
-	group = models.ForeignKey(Group)
+	group = models.ForeignKey(Group, null=True)
 	date_added = models.DateTimeField(auto_now_add=True)
 	
 	

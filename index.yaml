@@ -21,12 +21,22 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: accounts_userprofile
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: callsheet_callsheet
   properties:
   - name: __key__
     direction: desc
 
 - kind: callsheet_contact
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: registration_registrationprofile
   properties:
   - name: __key__
     direction: desc
