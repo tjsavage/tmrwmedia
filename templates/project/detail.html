@@ -7,7 +7,11 @@
 <p>{{ project.description }}</h1>
 <a href="/projects/{{ project.pk }}/edit">Edit</a>
 </div>
-<br />
+<div class="info_block">
+<h3>Cast and Crew</h3>
+<p>{{ num_contacts }} cast and crew members listed.</p>
+<a href="/projects/{{ project.pk }}/contacts/">Add/Edit</a>
+</div>
 <div class="info_block">
 <h3>Group Info</h3>
 {% if groups %}

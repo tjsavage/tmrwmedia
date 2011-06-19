@@ -3,6 +3,7 @@ from callsheet.forms import *
 from project.models import Project
 from project.forms import BasicProjectForm, ProjectForm
 from project.groups.models import Group
+from project.contacts.models import Contact
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -10,6 +11,8 @@ from django.core.context_processors import csrf
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+
+import logging
 
 def index(request):
 	projects = Project.objects.filter(owner=request.user)
@@ -55,9 +58,11 @@ def edit(request, project_id):
 def detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
 	groups = Group.objects.filter(project=project_id)
+	num_contacts = Contact.objects.filter(project=project_id).count()
 	
 	return render_to_response('project/detail.html', {'project': project,
-														'groups': groups}, 
+														'groups': groups,
+														'num_contacts' : num_contacts}, 
 														context_instance=RequestContext(request))
 
 def callsheets(request, project_id):

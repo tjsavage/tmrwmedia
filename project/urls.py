@@ -7,5 +7,5 @@ urlpatterns = patterns('project.views',
 	(r'^(?P<project_id>\d+)/edit/$', 'edit'),
 	(r'^(?P<project_id>\d+)/groups/', include('project.groups.urls')),
 	(r'^(?P<project_id>\d+)/contacts/', include('project.contacts.urls')),
-	(r'^(?P<project_id>\d+)/callsheets/$', 'callsheets'),
+	(r'^(?P<project_id>\d+)/schedule/', include('project.schedule.urls')),
 )

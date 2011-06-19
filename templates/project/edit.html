@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% block preload_js %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#id_start_date").datepicker({
+	});
+	$("#id_end_date").datepicker();
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <h1>{{ project.name }}</h1>
 <form method="POST" action="/projects/{{project.pk}}/edit/">

@@ -7,11 +7,24 @@ from django.contrib.auth.models import User
 
 class Day(models.Model):
 	project = models.ForeignKey(Project)
-	date = models.DateTimeField()
+	date = models.DateField()
 	notes = models.TextField(blank=True)
+
 	
 	def __unicode__(self):
 		return self.project.name + " : " + str(self.date)
+		
+	def year(self):
+		return self.date.year
+	
+	def month(self):
+		return self.date.month
+		
+	def day(self):
+		return self.date.day
+	
+	def title(self):
+		return self.project.name + " " + str(self.date)
 		
 	def calltime(self, user=None, contact=None):
 		if not contact:
@@ -27,7 +40,7 @@ class Day(models.Model):
 		return None
 	
 	def calltimes(self):
-		contacts = Contacts.object.filter(project=self.project)
+		contacts = Contact.object.filter(project=self.project)
 		calltimes = {}
 		
 		for contact in contacts:
@@ -54,6 +67,7 @@ class GroupCalltime(Calltime):
 		
 class IndividualCalltime(Calltime):
 	user = models.ForeignKey(User)
+	contact = models.ForeignKey(Contact)
 	
 	def contact(self):
 		return Contact.objects.filter(user=self.user).filter(project=self.project)[0]

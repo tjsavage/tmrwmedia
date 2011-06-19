@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block preload_js %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#datepicker").datepicker({
+		onSelect: function(dateText, inst) {
+			var date = new Date(dateText);
+			window.location = "/projects/{{ project.pk }}/schedule/callsheet/" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "/";
+		},
+		minDate: new Date({{ project.start_date.year }}, {{ project.start_date.month }} - 1, {{ project.start_date.day }}),
+		maxDate: new Date({{ project.end_date.year }}, {{ project.end_date.month }} - 1, {{ project.end_date.day }})
+
+	});
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<p>Date: <input type="text" id="datepicker" value="{{ day.date.month }}/{{ day.date.day }}/{{ day.date.year }}"></p>
+{% if not day %}
+	<p>Date selected is not within the date range for the project.</p>
+	<p><a href="/projects/{{ project.pk }}/edit/">Edit date range</a> or select a new date.</p>
+{% else %}
+<h1>{{ day }}</h1>
+{% for contact, calltime in day.calltimes %}
+	{{ contact.first_name }}
+{% empty %}
+	No calltimes set for this day.
+{% endfor %}
+{% endif %}
+{% endblock %}

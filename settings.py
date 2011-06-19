@@ -13,14 +13,15 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'djangotoolbox',
+    'piston',
     
     'registration',
     'callsheet',
     'accounts',
     'project',
     'project.groups',
+    'api',
 
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',

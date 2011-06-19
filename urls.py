@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^callsheets/', include('callsheet.urls')),
     (r'^projects/', include('project.urls')),
+    (r'^api/', include('api.urls')),
     ('^$', 'django.views.generic.simple.direct_to_template',
      {'template': 'home.html'}),
 )
