@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from project.models import Project
 from project.groups.models import Group
-from project.contacts.forms import InviteForm
+from project.contacts.forms import InviteForm, ContactForm
 from project.contacts.models import Contact
 from registration.models import RegistrationProfile
 from accounts import models
@@ -22,14 +22,48 @@ def index(request, project_id):
 	contacts = Contact.objects.filter(project=project_id)
 	invite_form = InviteForm()
 	invite_form.for_project(project_id)
+	project = get_object_or_404(Project, pk=project_id)
 	
 	
 	
 	return render_to_response('project/contacts/index.html',
 								{ "contacts" : contacts,
-								"invite_form" : invite_form
-								}
+								"invite_form" : invite_form,
+								"project" : project
+								}, 
+								context_instance=RequestContext(request)
 								)
+
+def edit(request, project_id, contact_id):
+	project = get_object_or_404(Project, pk=project_id)
+	contact = get_object_or_404(Contact, pk=contact_id)
+
+	if request.method == "POST":
+		logging.debug('\n\n POST: ' + str(request.POST) + " " + str(contact) + '\n\n')
+		contact_form = ContactForm(instance=contact)
+		logging.debug('\n\n' + str(contact_form) + '\n\n')
+		
+		logging.debug('\n\n' + str(contact_form) + '\n\n')
+		
+		if contact_form.is_valid():
+			contact_form.save()
+			return HttpResponseRedirect('/projects/' + str(project_id) + '/contacts/')
+	else:
+		contact_form = ContactForm(instance=contact)
+		logging.debug('\n\n' + str(contact_form) + '\n\n')
+		
+	contact_form.for_project(project_id)
+	
+	return render_to_response('project/contacts/edit.html',
+								{ "contact" : contact,
+								"contact_form" : contact_form,
+								"project" : project
+								},
+								context_instance=RequestContext(request)
+								)
+
+def detail(request, project_id, contact_id):
+	return HttpResponse("detail")
 
 def invite(request, project_id):
 	logging.debug("This is a post \n")
@@ -70,6 +104,7 @@ def invite(request, project_id):
 		form = InviteForm()
 	form.for_project(project_id)	
 	
-	return render_to_response('project/contacts/invite.html', { "form" : form} )
+	return render_to_response('project/contacts/invite.html', { "form" : form}, 
+								context_instance=RequestContext(request) )
 		
 		

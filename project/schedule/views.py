@@ -31,10 +31,36 @@ def callsheet(request, project_id, year, month, day):
 		day, created = Day.objects.get_or_create(date=the_day, project=project)
 	else:
 		day = None
+	
+	calltimes = {}
+	contacts = Contact.objects.filter(project=project)
+	contact_calltimes = {}
+	for contact in contacts:
+		if contact.group == None:
+			contact_calltimes[contact] = day.calltime(contact=contact)
+	calltimes["No Group"] = contact_calltimes
+	
+	groups = Group.objects.filter(project=project)
+	for group in groups:
+		contacts = Contact.objects.filter(project=project).filter(group=group)
+		contact_calltimes = {}
+		for contact in contacts:
+			contact_calltimes[contact] = day.calltime(contact=contact)
+		calltimes[group.name] = contact_calltimes
+	
+	
+	
+	logging.debug("\n\Calltimes: " + str(calltimes) + "\n\n")
 		
-	group_calltime_form = GroupCalltimeForm()
+	group_calltime_form = GroupCalltimeForm(initial={'date': the_day})
+	individual_calltime_form = IndividualCalltimeForm(initial={'date': the_day})
 	group_calltime_form.for_project(project_id)
+	individual_calltime_form.for_project(project_id)
 	
 		
 	return render_to_response('project/schedule/callsheet.html', {"day" : day,
-																"project" : project})
+																"project" : project,
+																"calltimes" : calltimes,
+																"group_calltime_form": group_calltime_form,
+																"individual_calltime_form": individual_calltime_form},
+																context_instance=RequestContext(request))

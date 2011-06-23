@@ -32,7 +32,10 @@
 			<li><a href="/">Home</a></li>
 			<li>{% if request.user.is_authenticated %}
 				<a href="/projects/">My Projects</a></li>
-				<li><a href="/callsheets/new">New Callsheet</a></li>
+				{% for another_project in request.user.profile.projects %}
+					<li><a href="/projects/{{ another_project.pk }}/">{{ another_project.name }}</a></li>
+				{% endfor %}
+				<li><a href="/projects/new">New Project</a></li>
 				<li><a href="/registration/logout">Logout</a></li>
 			{% else %}
 				<li><a href="/registration/login">Login</a></li>
@@ -57,7 +60,7 @@
 		{% endblock %}
 	</div>
 	<div id="footer">
-		Copyright © Site name, 20XX
+		Copyright © tmrwmedia, 2011
 	</div>
 </div>
 

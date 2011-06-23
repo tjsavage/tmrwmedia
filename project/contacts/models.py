@@ -5,52 +5,23 @@ from project.groups.models import Group
 
 class Contact(models.Model):
 	user = models.ForeignKey(User)
-	edited_first_name = models.CharField(blank=True)
-	edited_last_name = models.CharField(blank=True)
-	edited_phone = models.CharField(blank=True)
-	edited_email = models.CharField(blank=True)
+	first_name = models.CharField(max_length=30, blank=True, verbose_name = "First Name")
+	last_name = models.CharField(max_length=30, blank=True, verbose_name = "Last Name")
+	phone = models.CharField(max_length=30, blank=True, verbose_name = "Phone")
+	email = models.CharField(max_length=40, blank=True, verbose_name = "Email")
 	project = models.ForeignKey(Project)
-	group = models.ForeignKey(Group, null=True)
+	group = models.ForeignKey(Group, null=True, blank=True)
 	date_added = models.DateTimeField(auto_now_add=True)
 	
 	def __unicode__(self):
-		return self.user.first_name + " " + self.user.last_name + " in " + self.project.name
+		return self.user.first_name + " " + self.user.last_name
 		
-	def get_first_name(self):
-		if self.edited_first_name:
-			return self.edited_first_name
-		return self.user.first_name
-	
-	def set_first_name(self, fn):
-		self.edited_first_name = fn
-	
-	def get_last_name(self):
-		if self.edited_last_name:
-			return self.edited_last_name
-		return self.user.last_name
-	
-	def set_last_name(self, ln):
-		self.edited_last_name = ln
+	def __init__(self, *args, **kwargs):
+		super(Contact, self).__init__(*args, **kwargs)
+		self.first_name = self.user.first_name
+		self.last_name = self.user.last_name
+		self.phone = self.user.profile.phone
+		self.email = self.user.email
 		
-	def get_phone(self):
-		if self.edited_phone:
-			return self.edited_phone
-		return self.user.profile.phone
-		
-	def set_phone(self, ph):
-		self.edited_phone = ph
-	
-	def get_email(self):
-		if self.edited_email:
-			return self.edited_email
-		return self.user.email
-	
-	def set_email(self, em):
-		self.edited_email = em
-		
-	
-	first_name = property(get_first_name, set_first_name)
-	last_name = property(get_last_name, set_last_name)
-	phone = property(get_phone, set_phone)
-	email = property(get_email, set_email)
+	name = property(lambda s: s.first_name + " " + s.last_name)
 	

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ contact.name }}</h1>
+
+<form method="POST" action="">
+	{{ contact_form.as_p }}
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}

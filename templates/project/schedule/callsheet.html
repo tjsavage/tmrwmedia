@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block preload_js %}
+<script tye="text/javascript" src="/static/js/timepicker.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#datepicker").datepicker({
@@ -12,6 +14,28 @@ $(document).ready(function() {
 		maxDate: new Date({{ project.end_date.year }}, {{ project.end_date.month }} - 1, {{ project.end_date.day }})
 
 	});
+	
+	$("#id_time").timepicker({});
+	$("#individual_calltime_form").find("#id_time").timepicker({});
+	
+	
+	$(function() {
+		$("#group_calltime_submit").click(function() {
+			
+			$.ajax({
+				type: 'POST',
+				url: '/api/projects/{{ project.pk }}/groupcalltime/', 
+				data: $("#group_calltime_form").serialize(), 
+				success: function(data) { 
+					//alert("Success");
+				},
+				error: function(data) {
+					//alert("Failure");
+				}
+			});
+		});
+	});
+	
 });
 </script>
 {% endblock %}
@@ -23,10 +47,28 @@ $(document).ready(function() {
 	<p><a href="/projects/{{ project.pk }}/edit/">Edit date range</a> or select a new date.</p>
 {% else %}
 <h1>{{ day }}</h1>
-{% for contact, calltime in day.calltimes %}
-	{{ contact.first_name }}
+<table>
+{% for group, contacts in calltimes.items %}
+	<tr><td><b>{{ group }}</b></td></tr>
+	{% for contact, calltime in contacts.items %}
+		<tr><td>{{ contact.name }}</td><td>{{ calltime.time }}</td></tr>
+	{% empty %}
+		<tr><td>No listed contacts.</td></tr>
+	
+	{% endfor %}
 {% empty %}
 	No calltimes set for this day.
 {% endfor %}
+</table>
+<h3>Add/Edit Group Calltime</h3>
+<form method="POST" action="/api/projects/{{ project.pk }}/groupcalltime/" id="group_calltime_form">
+	{{ group_calltime_form.as_p }}
+	<input type="submit" value="Submit" id="group_calltime_submit" />
+</form>
+<h3>Add/Edit Individual Calltime</h3>
+<form method="POST" action="/api/projects/{{ project.pk }}/individualcalltime/" id="individual_calltime_form">
+	{{ individual_calltime_form.as_p }}
+	<input type="submit" value="Submit" id="individual_calltime_submit" />
+</form>
 {% endif %}
 {% endblock %}

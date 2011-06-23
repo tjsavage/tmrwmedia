@@ -29,7 +29,7 @@ class Day(models.Model):
 	def calltime(self, user=None, contact=None):
 		if not contact:
 			contact = Contact.objects.filter(user=user).filter(project=self.project)[0]
-		individual_calltime = IndividualCalltime.objects.filter(day=self).filter(user=user)
+		individual_calltime = IndividualCalltime.objects.filter(day=self).filter(contact=contact)
 		if individual_calltime.count():
 			return individual_calltime[0]
 		
@@ -40,7 +40,7 @@ class Day(models.Model):
 		return None
 	
 	def calltimes(self):
-		contacts = Contact.object.filter(project=self.project)
+		contacts = Contact.objects.filter(project=self.project)
 		calltimes = {}
 		
 		for contact in contacts:
@@ -53,7 +53,7 @@ class Day(models.Model):
 class Calltime(models.Model):
 	project = models.ForeignKey(Project)
 	day = models.ForeignKey(Day)
-	time = models.TimeField(blank=True)
+	time = models.TimeField(blank=True, null=True)
 	last_updated = models.DateTimeField(auto_now=True)
 	
 	class Meta:
@@ -66,12 +66,8 @@ class GroupCalltime(Calltime):
 		return self.project.name + ", " + self.group.name + " for " + str(self.day.date) + " at " + str(self.time)
 		
 class IndividualCalltime(Calltime):
-	user = models.ForeignKey(User)
 	contact = models.ForeignKey(Contact)
 	
-	def contact(self):
-		return Contact.objects.filter(user=self.user).filter(project=self.project)[0]
-		
 	def __unicode__(self):
-		return self.user.first_name + " " + self.user.last_name + " on " + str(self.day.date) + " at " + str(self.time)
+		return self.contact.first_name + " " + self.contact.last_name + " on " + str(self.day.date) + " at " + str(self.time)
 		

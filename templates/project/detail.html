@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
+{% block preload_js %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#datepicker").datepicker({
+		onSelect: function(dateText, inst) {
+			var date = new Date(dateText);
+			window.location = "/projects/{{ project.pk }}/schedule/callsheet/" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "/";
+		},
+		minDate: new Date({{ project.start_date.year }}, {{ project.start_date.month }} - 1, {{ project.start_date.day }}),
+		maxDate: new Date({{ project.end_date.year }}, {{ project.end_date.month }} - 1, {{ project.end_date.day }})
+
+	});
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <h1>{{ project.name }}</h1>
 <div class="info_block">
@@ -25,5 +41,10 @@
 </div>
 <div class="info_block">
 <h3>Schedule Info</h3>
+{% if project.start_date %}
+<p>Jump to date: <input type="text" id="datepicker" /></p>
+{% else %}
+<p><a href="/projects/{{ project.pk }}/edit/">Edit start and end dates</a></p>
+{% endif %}
 </div>
 {% endblock %}

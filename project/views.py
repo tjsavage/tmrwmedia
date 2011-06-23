@@ -31,7 +31,8 @@ def new(request):
 	else:
 		project_form = BasicProjectForm()
 	
-	return render_to_response('project/new.html', {"form": project_form,})
+	return render_to_response('project/new.html', {"form": project_form,},
+							context_instance=RequestContext(request))
 
 @login_required
 def edit(request, project_id):

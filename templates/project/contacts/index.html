@@ -9,6 +9,7 @@
 <td>{{ contact.user.get_profile.phone }}</td>
 <td>{{ contact.group }}</td>
 <td>{{ contact.user.email }}</td>
+<td><a href="/projects/{{ project.pk }}/contacts/{{ contact.pk }}/edit/">Edit</a></td>
 </tr>
 {% endfor %}
 </table>

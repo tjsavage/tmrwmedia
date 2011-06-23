@@ -23,6 +23,7 @@ def edit(request, project_id):
 			for instance in instances:
 				instance.project = project
 				instance.save()
+			return HttpResponseRedirect("/projects/" + str(project_id) + "/")
 	else:
 		formset = GroupFormSet(queryset=Group.objects.filter(project=project_id))
 	
@@ -30,7 +31,8 @@ def edit(request, project_id):
 	return render_to_response("project/groups/edit.html", {
 								"formset": formset,
 								"project": project,
-							})
+							},
+							context_instance=RequestContext(request))
 
 def index(request, project_id):
 	return HttpResponse("Groups index.")

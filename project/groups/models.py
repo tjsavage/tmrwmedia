@@ -5,7 +5,7 @@ from project.models import Project
 
 class Group(models.Model):
 	name = models.CharField(max_length=40)
-	leader = models.ForeignKey(User, null=True)
+	leader = models.ForeignKey(User, null=True, editable=False)
 	project = models.ForeignKey(Project)
 	
 	def __unicode__(self):
